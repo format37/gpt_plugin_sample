@@ -10,7 +10,9 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - ./data/files:/files
-      - ./ssl:/ssl
+      # - ./ssl:/ssl
+      - /etc/letsencrypt/live/langtea.club/fullchain.pem:/ssl/cert.pem
+      - /etc/letsencrypt/live/langtea.club/privkey.pem:/ssl/key.pem
     restart: always
     # network_mode: host
     ports:
