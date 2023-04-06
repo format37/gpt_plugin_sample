@@ -1,7 +1,6 @@
 import os
 from flask import Flask, request, jsonify, Response
 import logging
-from flask_sslify import SSLify
 import ssl
 
 logging.basicConfig(level=logging.INFO)
@@ -9,11 +8,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
-# context = ('/ssl/cert.pem', '/ssl/key.pem')
-# sslify = SSLify(app, permanent=True, ssl_context=context)
 context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
 context.load_cert_chain('/ssl/cert.pem', '/ssl/key.pem')
-sslify = SSLify(app, permanent=True, ssl_context=context)
 
 def send_file(filename, **options):
 	"""Opens a file and streams it as the response body.  This is similar to
@@ -64,6 +60,6 @@ if __name__ == "__main__":
     app.run(
 		host='0.0.0.0',
 		debug=False,
-		# port=int(os.environ.get("PORT", 80))
-		port=int(os.environ.get("PORT", 443))
+		port=int(os.environ.get("PORT", 443)),
+		ssl_context=context
 		)
