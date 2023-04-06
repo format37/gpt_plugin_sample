@@ -3,7 +3,7 @@ OpenAI ChatGPT plugin sample
 * [Introduction](https://platform.openai.com/docs/plugins/introduction)
 * [Examples](https://platform.openai.com/docs/plugins/examples)
 * [Manifest file](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)  
-## Certificate install guide
+## Certificate installation (recommended)
 If you're using only Flask in a Docker container and not using Apache or Nginx, you can still obtain an SSL certificate from Let's Encrypt using Certbot with the standalone plugin. Follow these steps:  
   
 1. Install Certbot. The commands below are for Debian/Ubuntu-based systems. For other systems, follow the instructions on the [Certbot website](https://certbot.eff.org/instructions).  
@@ -46,7 +46,7 @@ Now you have successfully obtained an SSL certificate from Let's Encrypt using C
   
 Note: Keep in mind that the standalone plugin requires stopping your Flask application and opening port 80 during the SSL certificate issuance and renewal process. This can cause brief downtime for your application. If possible, consider using a reverse proxy (like Nginx) in front of your Flask application to handle SSL termination, which will also provide additional benefits like better performance, security, and flexibility.  
   
-## Quick and dirty guide to install certificate (non prooved)
+#### Quick and dirty certificate installation (not recommended)
 Put your SSL files there:  
 cert.pem  
 key.pem  
