@@ -2,13 +2,17 @@ import os
 from flask import Flask, request, jsonify, Response
 import logging
 from flask_sslify import SSLify
+import ssl
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
-context = ('/ssl/cert.pem', '/ssl/key.pem')
+# context = ('/ssl/cert.pem', '/ssl/key.pem')
+# sslify = SSLify(app, permanent=True, ssl_context=context)
+context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
+context.load_cert_chain('/ssl/cert.pem', '/ssl/key.pem')
 sslify = SSLify(app, permanent=True, ssl_context=context)
 
 def send_file(filename, **options):
