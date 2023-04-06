@@ -12,10 +12,12 @@ services:
       - ./data/files:/files
       - ./ssl:/ssl
     restart: always
-    network_mode: host
+    # network_mode: host
+    ports:
+      - 443:443
     environment:
       - TZ=Europe/Moscow
-      - PORT=8443
+      - PORT=443
     logging:
       options:
         max-size: "10m"
