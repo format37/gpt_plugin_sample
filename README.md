@@ -3,7 +3,19 @@ OpenAI ChatGPT plugin sample
 * [Introduction](https://platform.openai.com/docs/plugins/introduction)
 * [Examples](https://platform.openai.com/docs/plugins/examples)
 * [Manifest file](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)  
-## Certificate installation (recommended)
+## Installation
+### 1. Install Docker (if you don't have it)
+```
+wget -qO- https://get.docker.com/ | sh
+sudo apt install python3-pip -y
+sudo pip install docker-compose
+```
+### 2. Clone this repository
+```
+git clone https://github.com/format37/gpt_plugin_sample.git
+cd gpt_plugin_sample
+```
+### 3. Certificate installation (recommended)
 If you're using only Flask in a Docker container and not using Apache or Nginx, you can still obtain an SSL certificate from Let's Encrypt using Certbot with the standalone plugin. Follow these steps:  
   
 1. Install Certbot. The commands below are for Debian/Ubuntu-based systems. For other systems, follow the instructions on the [Certbot website](https://certbot.eff.org/instructions).  
@@ -58,3 +70,10 @@ When asked for "Common Name (e.g. server FQDN or YOUR name)" you should reply
 with the same value in you put in WEBHOOK_HOST  
 for example:  
 example.com
+
+### 4. Check the docker-compose.yml file
+Update the domain name
+### 5. Run the docker-compose.yml file
+```
+docker-compose up --build -d
+```
