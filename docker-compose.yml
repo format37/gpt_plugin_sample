@@ -15,7 +15,7 @@ services:
     network_mode: host
     environment:
       - TZ=Europe/Moscow
-      - PORT=443
+      - PORT=8443
     logging:
       options:
         max-size: "10m"
