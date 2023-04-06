@@ -1,4 +1,4 @@
-# ChatGPT plugin sample
+# ChatGPT plugin sample. UNDER CONSTRUCTION - NOT COMPLETED
 OpenAI ChatGPT plugin sample  
 * [Introduction](https://platform.openai.com/docs/plugins/introduction)
 * [Examples](https://platform.openai.com/docs/plugins/examples)
@@ -15,7 +15,7 @@ sudo pip install docker-compose
 git clone https://github.com/format37/gpt_plugin_sample.git
 cd gpt_plugin_sample
 ```
-### 3. Certificate installation (recommended)
+### 3. Certificate installation
 If you're using only Flask in a Docker container and not using Apache or Nginx, you can still obtain an SSL certificate from Let's Encrypt using Certbot with the standalone plugin. Follow these steps:  
   
 1. Install Certbot. The commands below are for Debian/Ubuntu-based systems. For other systems, follow the instructions on the [Certbot website](https://certbot.eff.org/instructions).  
@@ -58,19 +58,6 @@ Now you have successfully obtained an SSL certificate from Let's Encrypt using C
   
 Note: Keep in mind that the standalone plugin requires stopping your Flask application and opening port 80 during the SSL certificate issuance and renewal process. This can cause brief downtime for your application. If possible, consider using a reverse proxy (like Nginx) in front of your Flask application to handle SSL termination, which will also provide additional benefits like better performance, security, and flexibility.  
   
-#### Quick and dirty certificate installation (not recommended)
-Put your SSL files there:  
-cert.pem  
-key.pem  
-```
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -days 3650 -key key.pem -out cert.pem
-```
-When asked for "Common Name (e.g. server FQDN or YOUR name)" you should reply  
-with the same value in you put in WEBHOOK_HOST  
-for example:  
-example.com
-
 ### 4. Check the docker-compose.yml file
 Update the domain name
 ### 5. Run the docker-compose.yml file
