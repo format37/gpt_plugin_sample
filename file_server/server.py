@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, render_template
 import logging
 import ssl
 
@@ -54,6 +54,11 @@ def send_from_directory(directory, filename, **options):
 @app.route('/<path:filename>')
 def serve_file(filename):
     return send_from_directory('/files', filename)
+
+
+@app.route('/legal')
+def serve_legal():
+    return render_template('legal.html')
 
 
 if __name__ == "__main__":
