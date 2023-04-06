@@ -12,6 +12,7 @@ services:
       - ./data/files:/files
       - /etc/letsencrypt/live/langtea.club/fullchain.pem:/ssl/cert.pem
       - /etc/letsencrypt/live/langtea.club/privkey.pem:/ssl/key.pem
+      - ./data/templates:/worker/templates
     restart: always
     ports:
       - 443:443
