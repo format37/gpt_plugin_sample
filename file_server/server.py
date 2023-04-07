@@ -109,8 +109,10 @@ def openapi_spec():
 		return Response(text, mimetype="text/yaml")
 	
 
-def web_to_json(url, max_tokens = 4000):
+def web_to_json(url, max_tokens = 1000):
+	logger.info(f"Requesting URL: {url}")
 	response = requests.get(url)
+	logger.info(f"Response status code: {response.status_code}")
 
 	soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -140,10 +142,14 @@ def web_to_json(url, max_tokens = 4000):
 	text_length = len(text)
 	# split by spaces
 	text_tokens = text.split(' ')
+	logger.info(f"Text length: {text_length}")
 	if len(text_tokens) > max_tokens:
 		text = text[:max_tokens]
 		text = text + '...'
 		links = links[:1]
+		logger.info(f"Text length after truncation: {len(text)}")
+		logger.info(f"Text words count after truncation: {len(text.split(' '))}")
+		logger.info(f"Links length after truncation: {len(links)}")
 
 	# Convert text content and links into JSON structure
 	json_data = {
