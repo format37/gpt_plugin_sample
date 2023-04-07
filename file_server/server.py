@@ -1,13 +1,21 @@
 import os
-from flask import Flask, request, jsonify, Response, render_template
+from flask import Flask, request, jsonify, Response, render_template, send_file
+from flask_cors import CORS
 import logging
 import ssl
+import json
+import requests
+import urllib.parse
+
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://chat.openai.com"}})
+HOST_URL = "https://langtea.club"
 context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
 context.load_cert_chain('/ssl/cert.pem', '/ssl/key.pem')
 
@@ -59,6 +67,11 @@ def serve_file(filename):
 @app.route('/legal')
 def serve_legal():
     return render_template('legal.html')
+
+# Primary page index.html
+@app.route('/')
+def serve_index():
+	return render_template('index.html')
 
 
 if __name__ == "__main__":
