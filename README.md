@@ -6,7 +6,7 @@ OpenAI ChatGPT plugin sample
 ## Overview
 This is a basic web parser plugin that retrieves text and links from a webpage based on the URL provided in the ChatGPT prompt. This enables ChatGPT to browse the web and gather current information.
 ## Requirements
-* Access to the limited alpha of Chat plugins. Join the (ChatGPT plugins waitlist here!)[https://openai.com/waitlist/plugins]  
+* Access to the limited alpha of Chat plugins. Join the [ChatGPT plugins waitlist here!](https://openai.com/waitlist/plugins)  
 * Linux machine with external static IP address  
 * Domain name  
 ## Installation
@@ -88,5 +88,5 @@ Please, describe, what is site langtea.club about?
 ```
 ### Additional resources:
 * Useful video: [ChatGPT Plugins: Build Your Own in Python!](https://youtu.be/hpePPqKxNq8)
-* (Official chatgpt-retrieval-plugin sample repo)[https://github.com/openai/chatgpt-retrieval-plugin]
-* (Officiall examples)[https://platform.openai.com/docs/plugins/examples]
+* [Official chatgpt-retrieval-plugin sample repo](https://github.com/openai/chatgpt-retrieval-plugin)
+* [Officiall examples](https://platform.openai.com/docs/plugins/examples)
