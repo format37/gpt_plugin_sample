@@ -3,6 +3,10 @@ OpenAI ChatGPT plugin sample
 * [Introduction](https://platform.openai.com/docs/plugins/introduction)
 * [Examples](https://platform.openai.com/docs/plugins/examples)
 * [Manifest file](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)  
+## Requirements
+* Access to the limited alpha of Chat plugins
+* Linux machine with external static IP address
+* Domain name
 ## Installation
 ### 1. Install Docker (if you don't have it)
 ```
@@ -59,8 +63,8 @@ Now you have successfully obtained an SSL certificate from Let's Encrypt using C
 Note: Keep in mind that the standalone plugin requires stopping your Flask application and opening port 80 during the SSL certificate issuance and renewal process. This can cause brief downtime for your application. If possible, consider using a reverse proxy (like Nginx) in front of your Flask application to handle SSL termination, which will also provide additional benefits like better performance, security, and flexibility.  
   
 ### 4. Check the docker-compose.yml file
-Update the domain name
-### 5. Run the docker-compose.yml file
+Update the domain name in docker-compose.yml
+### 5. Run the container
 ```
 docker-compose up --build -d
 ```
