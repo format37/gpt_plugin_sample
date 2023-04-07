@@ -9,10 +9,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://langtea.club/openapi.yaml",
+    "url": "langtea.club/openapi.yaml",
     "is_user_authenticated": false
   },
-  "logo_url": "https://langtea.club/tech_logo_480.png",
+  "logo_url": "langtea.club/tech_logo_480.png",
   "contact_email": "format37@gmail.com",
-  "legal_info_url": "https://langtea.club/legal.html"
+  "legal_info_url": "langtea.club/legal.html"
 }
