@@ -86,6 +86,7 @@ With the chosen plugin, write the prompt, containing request to your plugin. For
 ```
 Please, describe, what is site langtea.club about?
 ```
+![Conversation](https://github.com/format37/gpt_plugin_sample/raw/main/repo_photo/conversation.png)
 ### Additional resources:
 * Useful video: [ChatGPT Plugins: Build Your Own in Python!](https://youtu.be/hpePPqKxNq8)
 * [Official chatgpt-retrieval-plugin sample repo](https://github.com/openai/chatgpt-retrieval-plugin)
