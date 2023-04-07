@@ -1,12 +1,14 @@
-# ChatGPT plugin sample. UNDER CONSTRUCTION - NOT COMPLETED
+# ChatGPT plugin sample.
 OpenAI ChatGPT plugin sample  
-* [Introduction](https://platform.openai.com/docs/plugins/introduction)
-* [Examples](https://platform.openai.com/docs/plugins/examples)
-* [Manifest file](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)  
+* [Introduction](https://platform.openai.com/docs/plugins/introduction)  
+* [Getting started](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)  
+* [Examples](https://platform.openai.com/docs/plugins/examples)  
+## Overview
+This is a basic web parser plugin that retrieves text and links from a webpage based on the URL provided in the ChatGPT prompt. This enables ChatGPT to browse the web and gather current information.
 ## Requirements
-* Access to the limited alpha of Chat plugins
-* Linux machine with external static IP address
-* Domain name
+* Access to the limited alpha of Chat plugins. Join the (ChatGPT plugins waitlist here!)[https://openai.com/waitlist/plugins]  
+* Linux machine with external static IP address  
+* Domain name  
 ## Installation
 ### 1. Install Docker (if you don't have it)
 ```
@@ -68,3 +70,23 @@ Update the domain name in docker-compose.yml
 ```
 docker-compose up --build -d
 ```
+### 6. Install your plugin in ChatGPT UI
+* Go to [https://chat.openai.com/chat](https://chat.openai.com/chat)
+* Select model: Plugins ALPHA
+* Select Plugin: Plugin store
+* Click on "Develop your own plugin"
+* Click on "My manifest is ready"
+* Enter your domain name, for example: https://your-domain.com and click on "Find manifest file"
+* Click on "Next"
+* Click on "Install for me"
+* Click on "Continue"
+* Click on "Install plugin"
+### 7. Use your plugin
+With the chosen plugin, write the prompt, containing request to your plugin. For example:
+```
+Please, describe, what is site langtea.club about?
+```
+### Additional resources:
+* Useful video: [ChatGPT Plugins: Build Your Own in Python!](https://youtu.be/hpePPqKxNq8)
+* (Official chatgpt-retrieval-plugin sample repo)[https://github.com/openai/chatgpt-retrieval-plugin]
+* (Officiall examples)[https://platform.openai.com/docs/plugins/examples]
