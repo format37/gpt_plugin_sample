@@ -11,7 +11,7 @@ paths:
       operationId: getRequest
       summary: Get text and links from a web page
       parameters:
-      - in: url
+      - in: query
         name: url
         schema:
             type: string
