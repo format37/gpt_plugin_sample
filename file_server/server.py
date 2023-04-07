@@ -170,7 +170,7 @@ def plugin_manifest():
     with open("ai-plugin.json") as f:
         text = f.read()
         # This is a trick we do to populate the PLUGIN_HOSTNAME constant in the manifest
-        text = text.replace("PLUGIN_HOSTNAME", f"https://{host}")
+        text = text.replace("langtea.club", f"https://{host}")
         return Response(text, mimetype="text/json")
 
 
@@ -180,7 +180,7 @@ def openapi_spec():
     with open("openapi.yaml") as f:
         text = f.read()
         # This is a trick we do to populate the PLUGIN_HOSTNAME constant in the OpenAPI spec
-        text = text.replace("PLUGIN_HOSTNAME", f"https://{host}")
+        text = text.replace("langtea.club", f"https://{host}")
         return Response(text, mimetype="text/yaml")
 
 

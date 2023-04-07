@@ -3,6 +3,8 @@ WORKDIR /worker
 COPY requirements.txt /worker
 RUN pip3 install -r requirements.txt --no-cache-dir
 COPY server.py /worker
+COPY openapi.yaml /worker
+COPY ai-plugin.json /worker
 ENTRYPOINT ["python3"]
 CMD ["server.py"]
 
