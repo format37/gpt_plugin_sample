@@ -6,7 +6,9 @@ import ssl
 import json
 import requests
 import urllib.parse
-
+import requests
+from bs4 import BeautifulSoup
+import json
 
 
 logging.basicConfig(level=logging.INFO)
@@ -15,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://chat.openai.com"}})
-HOST_URL = "https://langtea.club"
+# HOST_URL = "https://langtea.club"
 context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
 context.load_cert_chain('/ssl/cert.pem', '/ssl/key.pem')
 
@@ -73,96 +75,21 @@ def serve_legal():
 def serve_index():
 	return render_template('index.html')
 
+
 @app.route("/players", methods=["GET"])
 def get_players():
-    query = request.args.get("query")
-    res = requests.get(
-        f"{HOST_URL}/api/v1/players?search={query}&page=0&per_page=100")
-    body = res.json()
-    return jsonify(body)
-
-
-@app.route("/teams", methods=["GET"])
-def get_teams():
-    res = requests.get(
-        f"{HOST_URL}/api/v1/teams?page=0&per_page=100")
-    body = res.json()
-    return jsonify(body)
-
-
-@app.route("/games", methods=["GET"])
-def get_games():
-    query_params = [("page", "0")]
-    limit = request.args.get("limit")
-    query_params.append(("per_page", limit or "100"))
-    start_date = request.args.get("start_date")
-    if start_date:
-        query_params.append(("start_date", start_date))
-    end_date = request.args.get("end_date")
-
-    if end_date:
-        query_params.append(("end_date", end_date))
-    seasons = request.args.getlist("seasons")
-
-    for season in seasons:
-        query_params.append(("seasons[]", str(season)))
-    team_ids = request.args.getlist("team_ids")
-
-    for team_id in team_ids:
-        query_params.append(("team_ids[]", str(team_id)))
-
-    res = requests.get(
-        f"{HOST_URL}/api/v1/games?{urllib.parse.urlencode(query_params)}")
-    body = res.json()
-    return jsonify(body)
-
-
-@app.route("/stats", methods=["GET"])
-def get_stats():
-    query_params = [("page", "0")]
-    limit = request.args.get("limit")
-    query_params.append(("per_page", limit or "100"))
-    start_date = request.args.get("start_date")
-    if start_date:
-        query_params.append(("start_date", start_date))
-    end_date = request.args.get("end_date")
-
-    if end_date:
-        query_params.append(("end_date", end_date))
-    player_ids = request.args.getlist("player_ids")
-
-    for player_id in player_ids:
-        query_params.append(("player_ids[]", str(player_id)))
-    game_ids = request.args.getlist("game_ids")
-
-    for game_id in game_ids:
-        query_params.append(("game_ids[]", str(game_id)))
-    res = requests.get(
-        f"{HOST_URL}/api/v1/stats?{urllib.parse.urlencode(query_params)}")
-    body = res.json()
-    return jsonify(body)
-
-
-@app.route("/season_averages", methods=["GET"])
-def get_season_averages():
-    query_params = []
-    season = request.args.get("season")
-    if season:
-        query_params.append(("season", str(season)))
-    player_ids = request.args.getlist("player_ids")
-
-    for player_id in player_ids:
-        query_params.append(("player_ids[]", str(player_id)))
-    res = requests.get(
-        f"{HOST_URL}/api/v1/season_averages?{urllib.parse.urlencode(query_params)}")
-    body = res.json()
-    return jsonify(body)
+	query = request.args.get("query")
+	# res = requests.get(f"{HOST_URL}/api/v1/players?search={query}&page=0&per_page=100")
+	res = web_to_json(query)
+	body = res.json()
+	return jsonify(body)
 
 
 @app.route("/logo.png", methods=["GET"])
 def plugin_logo():
     filename = 'logo.png'
     return send_file(filename, mimetype='image/png')
+
 
 @app.route("/.well-known/ai-plugin.json", methods=["GET"])
 def plugin_manifest():
@@ -182,6 +109,43 @@ def openapi_spec():
         # This is a trick we do to populate the PLUGIN_HOSTNAME constant in the OpenAPI spec
         text = text.replace("langtea.club", f"https://{host}")
         return Response(text, mimetype="text/yaml")
+    
+
+def web_to_json(url):
+    response = requests.get(url)
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Remove images and styles from the webpage
+    for img in soup.find_all('img'):
+        img.extract()
+
+    for style in soup.find_all('style'):
+        style.extract()
+
+    # Extract links from webpage
+    links = []
+    for link in soup.find_all('a'):
+        link_data = {
+            'href': link.get('href'),
+            'text': link.text.strip()
+        }
+        links.append(link_data)
+
+    # Extract text content from webpage
+    text = soup.get_text()
+    text = text.replace('\n', '')
+    text = text.replace('\r', '')
+    text = text.replace('\t', '')
+    text = text.replace('\xa0', '')
+
+    # Convert text content and links into JSON structure
+    json_data = {
+        'url': url,
+        'text': text,
+        'links': links
+    }
+    return json_data
 
 
 if __name__ == "__main__":
