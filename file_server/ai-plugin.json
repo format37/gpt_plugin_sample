@@ -1,9 +1,9 @@
 {
   "schema_version": "v1",
-  "name_for_human": "Sport Stats",
-  "name_for_model": "sportStats",
-  "description_for_human": "Get current and historical stats for sport players and games.",
-  "description_for_model": "Get current and historical stats for sport players and games. Always display results using markdown tables.",
+  "name_for_human": "Web parser",
+  "name_for_model": "webParser",
+  "description_for_human": "Does a request to site and get a text response with links.",
+  "description_for_model": "Does a request to site and get a text response with links.",
   "auth": {
     "type": "none"
   },

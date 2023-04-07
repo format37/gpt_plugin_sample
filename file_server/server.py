@@ -76,12 +76,10 @@ def serve_index():
 	return render_template('index.html')
 
 
-@app.route("/players", methods=["GET"])
-def get_players():
-	query = request.args.get("query")
-	# res = requests.get(f"{HOST_URL}/api/v1/players?search={query}&page=0&per_page=100")
+@app.route("/request", methods=["GET"])
+def get_request():
+	query = request.args.get("url")
 	body = web_to_json(query)
-	# body = res.json()
 	return jsonify(body)
 
 
