@@ -80,8 +80,8 @@ def serve_index():
 def get_players():
 	query = request.args.get("query")
 	# res = requests.get(f"{HOST_URL}/api/v1/players?search={query}&page=0&per_page=100")
-	res = web_to_json(query)
-	body = res.json()
+	body = web_to_json(query)
+	# body = res.json()
 	return jsonify(body)
 
 
