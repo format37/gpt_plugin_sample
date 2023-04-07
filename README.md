@@ -7,8 +7,8 @@ OpenAI ChatGPT plugin sample
 This is a basic web parser plugin that retrieves text and links from a webpage based on the URL provided in the ChatGPT prompt. This enables ChatGPT to browse the web and gather current information.
 ## Requirements
 * Access to the limited alpha of Chat plugins. Join the [ChatGPT plugins waitlist here!](https://openai.com/waitlist/plugins)  
-* Linux machine with external static IP address  
-* Domain name  
+* Linux machine with external static IP address. I am using Google Cloud VM.  
+* Domain name, linked to your IP address.  
 ## Installation
 ### 1. Install Docker (if you don't have it)
 ```

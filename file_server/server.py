@@ -63,12 +63,12 @@ def send_from_directory(directory, filename, **options):
 
 @app.route('/<path:filename>')
 def serve_file(filename):
-    return send_from_directory('/files', filename)
+	return send_from_directory('/files', filename)
 
 
 @app.route('/legal')
 def serve_legal():
-    return render_template('legal.html')
+	return render_template('legal.html')
 
 # Primary page index.html
 @app.route('/')
@@ -85,69 +85,77 @@ def get_request():
 
 @app.route("/logo.png", methods=["GET"])
 def plugin_logo():
-    filename = 'logo.png'
-    return send_file(filename, mimetype='image/png')
+	filename = 'logo.png'
+	return send_file(filename, mimetype='image/png')
 
 
 @app.route("/.well-known/ai-plugin.json", methods=["GET"])
 def plugin_manifest():
-    host = request.headers['Host']
-    with open("ai-plugin.json") as f:
-        text = f.read()
-        # This is a trick we do to populate the PLUGIN_HOSTNAME constant in the manifest
-        text = text.replace("langtea.club", f"https://{host}")
-        return Response(text, mimetype="text/json")
+	host = request.headers['Host']
+	with open("ai-plugin.json") as f:
+		text = f.read()
+		# This is a trick we do to populate the PLUGIN_HOSTNAME constant in the manifest
+		text = text.replace("langtea.club", f"https://{host}")
+		return Response(text, mimetype="text/json")
 
 
 @app.route("/openapi.yaml", methods=["GET"])
 def openapi_spec():
-    host = request.headers['Host']
-    with open("openapi.yaml") as f:
-        text = f.read()
-        # This is a trick we do to populate the PLUGIN_HOSTNAME constant in the OpenAPI spec
-        text = text.replace("langtea.club", f"https://{host}")
-        return Response(text, mimetype="text/yaml")
-    
+	host = request.headers['Host']
+	with open("openapi.yaml") as f:
+		text = f.read()
+		# This is a trick we do to populate the PLUGIN_HOSTNAME constant in the OpenAPI spec
+		text = text.replace("langtea.club", f"https://{host}")
+		return Response(text, mimetype="text/yaml")
+	
 
-def web_to_json(url):
-    response = requests.get(url)
+def web_to_json(url, max_tokens = 4000):
+	response = requests.get(url)
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+	soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Remove images and styles from the webpage
-    for img in soup.find_all('img'):
-        img.extract()
+	# Remove images and styles from the webpage
+	for img in soup.find_all('img'):
+		img.extract()
 
-    for style in soup.find_all('style'):
-        style.extract()
+	for style in soup.find_all('style'):
+		style.extract()
 
-    # Extract links from webpage
-    links = []
-    for link in soup.find_all('a'):
-        link_data = {
-            'href': link.get('href'),
-            'text': link.text.strip()
-        }
-        links.append(link_data)
+	# Extract links from webpage
+	links = []
+	for link in soup.find_all('a'):
+		link_data = {
+			'href': link.get('href'),
+			'text': link.text.strip()
+		}
+		links.append(link_data)
 
-    # Extract text content from webpage
-    text = soup.get_text()
-    text = text.replace('\n', '')
-    text = text.replace('\r', '')
-    text = text.replace('\t', '')
-    text = text.replace('\xa0', '')
+	# Extract text content from webpage
+	text = soup.get_text()
+	text = text.replace('\n', '')
+	text = text.replace('\r', '')
+	text = text.replace('\t', '')
+	text = text.replace('\xa0', '')
 
-    # Convert text content and links into JSON structure
-    json_data = {
-        'url': url,
-        'text': text,
-        'links': links
-    }
-    return json_data
+	text_length = len(text)
+	# split by spaces
+	text_tokens = text.split(' ')
+	if len(text_tokens) > max_tokens:
+		text = text[:max_tokens]
+		text = text + '...'
+		links = links[:1]
+
+	# Convert text content and links into JSON structure
+	json_data = {
+		'url': url,
+		'text': text,
+		'links': links
+	}
+	return json_data
 
 
 if __name__ == "__main__":
-    app.run(
+	app.run(
 		host='0.0.0.0',
 		debug=False,
 		port=int(os.environ.get("PORT", 443)),
